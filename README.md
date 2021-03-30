@@ -1,24 +1,5 @@
 # bing-vue
 
-## Project setup
-```
-npm install
-```
+### 使用 vue3 构建的必应每日一图
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+> 服务端仓库: https://github.com/androidmumo/bing-serve
