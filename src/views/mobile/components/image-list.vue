@@ -1,19 +1,35 @@
+/* eslint-disable vue/no-v-model-argument */
 <template>
-  <div class="root">
-    <router-view></router-view>
+  <div class="image-list">
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+      <van-cell v-for="item in list" :key="item" :title="item" />
+    </van-list>
   </div>
 </template>
 
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》';
+import { List, Cell } from 'vant';
 
 export default {
 	// import引入的组件需要注入到对象中才能使用
-	components: {},
+	components: {
+		'van-list': List,
+		'van-cell': Cell,
+	},
 	data() {
 		// 这里存放数据
-		return {};
+		return {
+			loading: false,
+			finished: false,
+			list: [1, 2],
+		};
 	},
 	// 监听属性 类似于data概念
 	computed: {},
@@ -21,31 +37,26 @@ export default {
 	watch: {},
 	// 方法集合
 	methods: {
-		// 根据ua加载对应的组件
-		getUa() {
-			var ua = navigator.userAgent,
-				isWindowsPhone = /(?:Windows Phone)/.test(ua),
-				isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
-				isAndroid = /(?:Android)/.test(ua),
-				isFireFox = /(?:Firefox)/.test(ua),
-				// isChrome = /(?:Chrome|CriOS)/.test(ua),
-				isTablet =
-          /(?:iPad|PlayBook)/.test(ua) ||
-          (isAndroid && !/(?:Mobile)/.test(ua)) ||
-          (isFireFox && /(?:Tablet)/.test(ua)),
-				isPhone = /(?:iPhone)/.test(ua) && !isTablet,
-				isPc = !isPhone && !isAndroid && !isSymbian;
-			if (isTablet || isPc) {
-				this.$router.push({ path: '/pc' });
-			} else {
-				this.$router.push({ path: '/mobile' });
-			}
+		onLoad() {
+			// 异步更新数据
+			// setTimeout 仅做示例，真实场景中一般为 ajax 请求
+			setTimeout(() => {
+				for (let i = 0; i < 10; i++) {
+					this.list.push(this.list.length + 1);
+				}
+
+				// 加载状态结束
+				this.loading = false;
+
+				// 数据全部加载完成
+				if (this.list.length >= 40) {
+					this.finished = true;
+				}
+			}, 1000);
 		},
 	},
 	// 生命周期 - 创建完成（可以访问当前this实例）
-	created() {
-		this.getUa();
-	},
+	created() {},
 	// 生命周期 - 挂载完成（可以访问DOM元素）
 	mounted() {},
 	beforeCreate() {}, // 生命周期 - 创建之前
@@ -59,10 +70,6 @@ export default {
 	activated() {}, // 如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 // @import url(); 引入公共css类
-.root {
-	width: 100%;
-	height: 100%;
-}
 </style>

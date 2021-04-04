@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="biying" unicode="&#58880;" d="M340.5824 825.890133L102.536533 895.317333v-851.217066L340.650667 252.65493300000003V825.890133zM102.536533 44.23680000000002l238.045867-171.6224 580.881067 340.923733V484.215467L102.536533 44.168533000000025zM409.463467 640.6143999999999l113.732266-238.933333 138.8544-56.866134 259.413334 139.400534-506.0608 156.330666z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="caidan1" unicode="&#58959;" d="M231.7312 650.24a37.1712 37.1712 0 0 1 0-74.2912h560.5376a37.1712 37.1712 0 0 1 0 74.2912H231.7312z m0-228.7104a37.1712 37.1712 0 0 1 0-74.3424h560.5376c20.5312 0 37.1712 16.64 37.1712 37.1712v0.0512a37.2736 37.2736 0 0 1-37.1712 37.12H231.7312z m0-228.1472a37.1712 37.1712 0 0 1 0-74.3424h560.5376a37.1712 37.1712 0 0 1 0 74.3424H231.7312z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

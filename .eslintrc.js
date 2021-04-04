@@ -36,6 +36,7 @@ module.exports = {
 		'semi': [
 			'error',
 			'always'
-		]
+		],
+		'vue/no-v-model-argument': 0
 	}
 };

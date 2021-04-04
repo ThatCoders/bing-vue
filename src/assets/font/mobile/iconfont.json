@@ -1,0 +1,23 @@
+{
+  "id": "2461581",
+  "name": "bing-vue",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-bingvue-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "12903408",
+      "name": "必应 ",
+      "font_class": "biying",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "20094154",
+      "name": "菜单 1",
+      "font_class": "caidan1",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    }
+  ]
+}

@@ -6,6 +6,7 @@ function resolve(dir) {
 }
 module.exports = {
 	lintOnSave: 'error', // 设置eslint报错时停止代码编译
+	// publicPath: './',  //输出的根路径  默认是/ 如果你的网站是app.com/vue 这更改此配置项
 	productionSourceMap: false, // 不需要生产环境的 source map（减小dist文件大小，加速构建）
 	devServer: {
 		open: true, // npm run serve后自动打开页面
