@@ -19,15 +19,20 @@
       @click-close-icon="clickCloseIcon"
     >
       <div class="right-pop">
-        <van-count-down :time="keyTime">
-          <template #default="timeData">
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.seconds }}</span>
-          </template>
-        </van-count-down>
+        <div class="pop-count-down">
+          <div class="pop-count-down-text">距下次更新还有</div>
+          <div class="pop-count-down-content">
+            <van-count-down :time="keyTime">
+              <template #default="timeData">
+                <span class="block">{{ timeData.hours }}</span>
+                <span class="colon">:</span>
+                <span class="block">{{ timeData.minutes }}</span>
+                <span class="colon">:</span>
+                <span class="block">{{ timeData.seconds }}</span>
+              </template>
+            </van-count-down>
+          </div>
+        </div>
       </div>
     </van-popup>
   </div>
@@ -68,7 +73,7 @@ export default {
 			keyTime.setMinutes(1);
 			keyTime.setSeconds(30);
 			keyTime.setMilliseconds(0);
-			this.keyTime = keyTime.getTime();
+			this.keyTime = keyTime.getTime() - new Date();
 		},
 		clickBtn() {
 			this.show = true;
@@ -134,22 +139,37 @@ export default {
     }
   }
   .right-pop {
-    width: 100%;
-    height: 100%;
+    height: calc(100% - 32px);
     background-color: #fff;
-    .block {
-      display: inline-block;
-      width: 22px;
-      color: #fff;
-      font-size: 12px;
-      text-align: center;
-      border-radius: 3px;
-      background-color: rgb(31, 168, 161);
-    }
-    .colon {
-      display: inline-block;
-      margin: 0 4px;
-      color: rgb(31, 168, 161);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .pop-count-down {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .pop-count-down-text {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .pop-count-down-content {
+        .block {
+          display: inline-block;
+          width: 22px;
+          color: #fff;
+          font-size: 12px;
+          text-align: center;
+          border-radius: 3px;
+          background-color: rgb(31, 168, 161);
+        }
+        .colon {
+          display: inline-block;
+          margin: 0 4px;
+          color: rgb(31, 168, 161);
+        }
+      }
     }
   }
 }

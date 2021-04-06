@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-v-model-argument */
 <template>
   <div class="image-list">
     <van-list
