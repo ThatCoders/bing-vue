@@ -52,15 +52,15 @@ export default {
 <style lang="scss" scoped>
 // @import url(); 引入公共css类
 .mobile {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   .header-wrap {
   }
   .content-wrap {
     flex: 1;
-	overflow-y: scroll;
+    overflow-y: scroll;
   }
 }
 </style>

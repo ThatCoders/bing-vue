@@ -1,14 +1,15 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import './lib/pmage.css';
-import Pmage from './lib/pmage';
+import vProgressiveImage from 'v-progressive-image';
 
 const app = createApp(App);
 
 app.use(router);
-app.use(Pmage, {
-	removePreview: false
+app.use(vProgressiveImage, {
+	removePreview: false,
+	animation: true,
+	scale: 1
 });
 
 app.mount('#app');
