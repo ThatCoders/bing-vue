@@ -13,7 +13,7 @@
     "compression-webpack-plugin": "^5.0.1",
     "core-js": "^3.9.1",
     "element-plus": "^1.0.2-beta.36",
-    "v-progressive-image": "^1.0.3",
+    "v-progressive-image": "^1.1.2",
     "vant": "^3.0.11",
     "vue": "^3.0.9",
     "vue-router": "^4.0.5"
