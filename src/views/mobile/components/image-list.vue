@@ -6,8 +6,10 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <progressive-image :preview="preview" :src="src"/>
-      <van-cell v-for="item in list" :key="item" :title="item" />
+      <div v-for="(item, index) in imgList" :key="index">
+        <div v-preview="item.base64" v-origin="item.url.hd"></div>
+      </div>
+      <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
     </van-list>
   </div>
 </template>
@@ -15,15 +17,14 @@
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》';
-import { List, Cell } from 'vant';
-import ProgressiveImage from './progressive-image.vue';
+import { List } from 'vant';
+import axios from 'axios';
 
 export default {
 	// import引入的组件需要注入到对象中才能使用
 	components: {
 		'van-list': List,
-		'van-cell': Cell,
-		ProgressiveImage,
+		// 'van-cell': Cell,
 	},
 	data() {
 		// 这里存放数据
@@ -31,8 +32,7 @@ export default {
 			loading: false,
 			finished: false,
 			list: [1, 2],
-			preview: 'https://bing.mcloc.cn/api?thumbnail=1',
-			src: 'https://bing.mcloc.cn/api'
+			imgList: [],
 		};
 	},
 	// 监听属性 类似于data概念
@@ -41,6 +41,14 @@ export default {
 	watch: {},
 	// 方法集合
 	methods: {
+		init() {
+			axios
+				.get('https://bing.api.mcloc.cn/getList?pageSize=3&currentPage=1')
+				.then((res) => {
+					console.log(res);
+					this.imgList = res.data.list;
+				});
+		},
 		onLoad() {
 			// 异步更新数据
 			// setTimeout 仅做示例，真实场景中一般为 ajax 请求
@@ -60,7 +68,9 @@ export default {
 		},
 	},
 	// 生命周期 - 创建完成（可以访问当前this实例）
-	created() {},
+	created() {
+		this.init();
+	},
 	// 生命周期 - 挂载完成（可以访问DOM元素）
 	mounted() {},
 	beforeCreate() {}, // 生命周期 - 创建之前
