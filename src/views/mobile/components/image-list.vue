@@ -2,14 +2,65 @@
   <div class="image-list">
     <van-list
       v-model:loading="loading"
+      v-model:error="error"
       :finished="finished"
       finished-text="没有更多了"
+      error-text="请求失败，点击重新加载"
       @load="onLoad"
     >
       <div v-for="(item, index) in imgList" :key="index">
-        <div v-preview="item.base64" v-origin="item.url.hd"></div>
+        <van-swipe-cell>
+          <div v-preview="item.base64" v-origin="item?.url.hd"></div>
+          <template #right>
+            <div class="swipe-cell-wrap">
+              <div class="swipe-cell-left">
+                <div class="swipe-cell-date">
+                  <van-tag color="#999">{{ item.date }}</van-tag>
+                </div>
+                <div class="swipe-cell-title">
+                  {{ item.title }}
+                </div>
+                <div class="swipe-cell-btn">
+                  <van-button
+                    class="swipe-cell-btn-download"
+                    square
+                    type="primary"
+                    text="下载"
+                  />
+                </div>
+              </div>
+              <div class="swipe-cell-right">
+                <div class="swipe-cell-color">
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.Vibrant }"
+                  ></div>
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.DarkVibrant }"
+                  ></div>
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.LightVibrant }"
+                  ></div>
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.Muted }"
+                  ></div>
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.DarkMuted }"
+                  ></div>
+                  <div
+                    class="color-block"
+                    :style="{ 'background-color': item.color.LightMuted }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </van-swipe-cell>
       </div>
-      <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
     </van-list>
   </div>
 </template>
@@ -17,22 +68,26 @@
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》';
-import { List } from 'vant';
+import { List, SwipeCell, Button, Tag } from 'vant';
 import axios from 'axios';
 
 export default {
 	// import引入的组件需要注入到对象中才能使用
 	components: {
 		'van-list': List,
-		// 'van-cell': Cell,
+		'van-swipe-cell': SwipeCell,
+		'van-button': Button,
+		'van-tag': Tag,
 	},
 	data() {
 		// 这里存放数据
 		return {
 			loading: false,
+			error: false,
 			finished: false,
-			list: [1, 2],
 			imgList: [],
+			pageSize: 5,
+			currentPage: 1,
 		};
 	},
 	// 监听属性 类似于data概念
@@ -41,36 +96,31 @@ export default {
 	watch: {},
 	// 方法集合
 	methods: {
-		init() {
-			axios
-				.get('https://bing.api.mcloc.cn/getList?pageSize=3&currentPage=1')
-				.then((res) => {
-					console.log(res);
-					this.imgList = res.data.list;
-				});
+		// 请求图片
+		loadImg(pageSize, currentPage) {
+			return axios.get(
+				`https://bing.api.mcloc.cn/getList?pageSize=${pageSize}&currentPage=${currentPage}`
+			);
 		},
 		onLoad() {
 			// 异步更新数据
-			// setTimeout 仅做示例，真实场景中一般为 ajax 请求
-			setTimeout(() => {
-				for (let i = 0; i < 10; i++) {
-					this.list.push(this.list.length + 1);
-				}
-
+			this.loadImg(this.pageSize, this.currentPage).then((res) => {
+				console.log(res);
+				this.imgList = [...this.imgList, ...res.data.list];
 				// 加载状态结束
 				this.loading = false;
-
-				// 数据全部加载完成
-				if (this.list.length >= 40) {
+				if (this.imgList.length >= res.data.totle) {
+					// 全部加载完成
 					this.finished = true;
 				}
-			}, 1000);
+			}).catch(() => {
+				this.error = true;
+			});
+			this.currentPage++;
 		},
 	},
 	// 生命周期 - 创建完成（可以访问当前this实例）
-	created() {
-		this.init();
-	},
+	created() {},
 	// 生命周期 - 挂载完成（可以访问DOM元素）
 	mounted() {},
 	beforeCreate() {}, // 生命周期 - 创建之前
@@ -86,4 +136,44 @@ export default {
 </script>
 <style lang="scss" scoped>
 // @import url(); 引入公共css类
+.swipe-cell-wrap {
+  width: 150px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .swipe-cell-left {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    .swipe-cell-date {
+      margin-top: 10px;
+    }
+    .swipe-cell-title {
+      padding: 0 10px;
+      color: #333;
+      font-size: 14px;
+    }
+    .swipe-cell-btn {
+      width: 100%;
+      .swipe-cell-btn-download {
+        width: 100%;
+      }
+    }
+  }
+  .swipe-cell-right {
+    height: 100%;
+    .swipe-cell-color {
+      width: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      .color-block {
+        flex: 1;
+      }
+    }
+  }
+}
 </style>
