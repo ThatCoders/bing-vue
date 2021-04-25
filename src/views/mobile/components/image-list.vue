@@ -10,7 +10,7 @@
     >
       <div v-for="(item, index) in imgList" :key="index">
         <van-swipe-cell>
-          <div v-preview="item.base64" v-origin="item?.url.hd"></div>
+          <div v-preview="item.base64" v-origin="item?.url.hd" @click="clickImg(index, item)"></div>
           <template #right>
             <div class="swipe-cell-wrap">
               <div class="swipe-cell-left">
@@ -26,6 +26,7 @@
                     square
                     type="primary"
                     text="下载"
+					@click.stop="clickDownloadBtn(index, item)"
                   />
                 </div>
               </div>
@@ -68,7 +69,7 @@
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》';
-import { List, SwipeCell, Button, Tag } from 'vant';
+import { List, SwipeCell, Button, Tag, ImagePreview } from 'vant';
 import axios from 'axios';
 
 export default {
@@ -78,6 +79,7 @@ export default {
 		'van-swipe-cell': SwipeCell,
 		'van-button': Button,
 		'van-tag': Tag,
+		[ImagePreview.Component.name]: ImagePreview.Component,
 	},
 	data() {
 		// 这里存放数据
@@ -118,6 +120,16 @@ export default {
 			});
 			this.currentPage++;
 		},
+		// 点击下载按钮
+		clickDownloadBtn(index, item) {
+			window.open(item?.url?.hd);
+		},
+		// 点击图片
+		clickImg(index, item) {
+			ImagePreview([
+				item?.url?.hd
+			]);
+		}
 	},
 	// 生命周期 - 创建完成（可以访问当前this实例）
 	created() {},
