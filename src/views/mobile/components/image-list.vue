@@ -10,7 +10,11 @@
     >
       <div v-for="(item, index) in imgList" :key="index">
         <van-swipe-cell>
-          <div v-preview="item.base64" v-origin="item?.url.hd" @click="clickImg(index, item)"></div>
+          <div
+            v-preview="item.base64"
+            v-origin="item?.url.hd"
+            @click="clickImg(index, item)"
+          ></div>
           <template #right>
             <div class="swipe-cell-wrap">
               <div class="swipe-cell-left">
@@ -26,7 +30,7 @@
                     square
                     type="primary"
                     text="下载"
-					@click.stop="clickDownloadBtn(index, item)"
+                    @click.stop="clickDownloadBtn(index, item)"
                   />
                 </div>
               </div>
@@ -106,18 +110,20 @@ export default {
 		},
 		onLoad() {
 			// 异步更新数据
-			this.loadImg(this.pageSize, this.currentPage).then((res) => {
-				console.log(res);
-				this.imgList = [...this.imgList, ...res.data.list];
-				// 加载状态结束
-				this.loading = false;
-				if (this.imgList.length >= res.data.totle) {
-					// 全部加载完成
-					this.finished = true;
-				}
-			}).catch(() => {
-				this.error = true;
-			});
+			this.loadImg(this.pageSize, this.currentPage)
+				.then((res) => {
+					console.log(res);
+					this.imgList = [...this.imgList, ...res.data.list];
+					// 加载状态结束
+					this.loading = false;
+					if (this.imgList.length >= res.data.totle) {
+						// 全部加载完成
+						this.finished = true;
+					}
+				})
+				.catch(() => {
+					this.error = true;
+				});
 			this.currentPage++;
 		},
 		// 点击下载按钮
@@ -126,10 +132,8 @@ export default {
 		},
 		// 点击图片
 		clickImg(index, item) {
-			ImagePreview([
-				item?.url?.hd
-			]);
-		}
+			ImagePreview([item?.url?.hd]);
+		},
 	},
 	// 生命周期 - 创建完成（可以访问当前this实例）
 	created() {},
